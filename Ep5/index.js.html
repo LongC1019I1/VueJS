@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1 ref="Ola">{{title}}</h1>
+        <h1>After computed: {{lowercaseTitle}}</h1>
+    <button @click="show" >Show</button>
+    <p v-if="showParagraph">xin chao</p>
+</div>
+
+<div id="app2">
+    <h1>{{title}}</h1>
+    <hello></hello>
+    <button @click="onchangeTitle">Change something is First Vue JS instance</button>
+</div>
+
+</body>
+
+<script>
+
+    Vue.component('hello',{
+        template: '<p> Xin chao VietNam</p>'
+    })
+    var vn = new Vue({
+        el: '#app',
+        data: {
+            title: 'The Vue JS Instance',
+            showParagraph: false
+        },
+
+        methods: {
+            show: function () {
+                this.showParagraph = true;
+                this.updateTitle('This Vue JS Instance (Update)');
+                console.log(this.$refs)
+                },
+
+            updateTitle: function (title) {
+                this.title = title;
+            }
+        },
+        computed: {
+            lowercaseTitle: function () {
+                return this.title.toLowerCase();
+            }
+        },
+        watch: {
+            title: function (value) {
+                alert('Title change' + value);
+            }
+        }
+    });
+
+    var tl = new Vue({
+        el: '#app2',
+        data: {
+            title: 'The Second Vue JS Instance',
+
+        },
+        methods: {
+            onchangeTitle: function () {
+                vn.title = 'Changed';
+            }
+        },
+    });
+
+vn.$refs.Ola.innerText = 'test'
+</script>
+</html>
